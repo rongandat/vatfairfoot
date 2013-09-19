@@ -1,0 +1,1 @@
+<li><a href="#ProductPosts">{l s='Blog' mod='psblog'}</a></li>

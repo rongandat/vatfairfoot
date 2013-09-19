@@ -1,0 +1,63 @@
+/*
+##################################################################################################
+	CUSTOM CSS
+
+	Keep all your modifications in one place, 
+	Edit this file to customize 01premium Theme
+
+##################################################################################################
+*/
+
+
+/* BACKGROUND IMAGE */
+
+/*
+	body {
+		background: url(../img/bg_body.jpg) center top repeat;
+	}
+*/
+
+/* FONT FAMILY FOR TITLES */
+
+/*
+	#nav > li,
+	h1, .breadcrumb + h2, h2, h3,
+	#footer h4,
+	#right_column h4,
+	input.button_mini, input.button_small, input.button, input.button_large,
+	input.button_mini_disabled, input.button_small_disabled, input.button_disabled, input.button_large_disabled,
+	input.exclusive_mini, input.exclusive_small, input.exclusive, input.exclusive_large,
+	input.exclusive_mini_disabled, input.exclusive_small_disabled, input.exclusive_disabled, input.exclusive_large_disabled,
+	a.button_mini, a.button_small, a.button, a.button_large,
+	a.exclusive_mini, a.exclusive_small, a.exclusive, a.exclusive_large,
+	span.button_mini, span.button_small, span.button, span.button_large,
+	span.exclusive_mini, span.exclusive_small, span.exclusive, span.exclusive_large, span.exclusive_large_disabled,
+	#buy_block .price {
+		font-family: Georgia, "Times New Roman", Times, serif;
+	}
+*/
+
+/* FONT FAMILY FOR CONTENT */
+
+/*
+	body {
+		font-family: Arial, Helvetica, sans-serif;
+	}
+*/
+
+/* fix font rendering for webkit */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	@font-face {
+		font-family: 'webkit_Sanchez';
+		src:url('font/sanchez-regular.woff') format('woff'),
+			url('font/sanchez-regular.svg') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+
+	#nav > li,
+	h1, .breadcrumb + h2, h2, h3,
+	#footer h4 {
+		font-family: 'webkit_Sanchez', Sanchez, Arial, Helvetica, sans-serif;
+	}
+}

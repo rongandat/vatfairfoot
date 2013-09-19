@@ -1,0 +1,206 @@
+ul#product_list {margin-bottom:20px;}
+	#product_list li {padding:20px 0; border-bottom:#eee solid 1px;}
+		#product_list li:last-child {border-bottom:none;}
+
+#product_list li .left_block {
+	float:left;
+	padding-top:99px;
+	width:15px
+}
+	#product_list li .left_block  .compare label {display:none;}
+
+		#product_list li p.compare input {
+			vertical-align: text-bottom
+		}
+
+#product_list li .center_block {
+   float: left;
+	padding:0 20px 0 10px;
+	width: 745px;
+	border-right:1px solid #eee;
+}
+#product_list a.product_img_link {
+	overflow:hidden;
+	position:relative;
+	float: left;
+	display:block;
+	margin-right: 14px;
+	border: 1px solid #ccc;
+	background:#ccc;
+}
+#product_list a.product_img_link:hover,
+#product_list a.product_img_link:focus {
+	border-color: #000;
+}
+	#product_list a.product_img_link img {
+		display: block;
+		vertical-align: bottom
+	}
+	#product_list li span.new {
+		display: block;
+		position: absolute;
+		top: 15px;
+		right:-30px;
+		padding: 1px 4px;
+		width: 101px;
+		font-size:10px;
+		color: #fff;
+		text-align: center;
+		text-transform: uppercase;
+		-moz-transform: rotate(45deg);
+		-webkit-transform: rotate(45deg);
+		-o-transform: rotate(45deg);
+		-ms-transform: rotate(45deg);
+		background-color: #333;
+	}
+#product_list li h3 {
+	font-size: 20px; font-size: 2rem;
+}
+	#product_list li h3 span {display:block;}
+
+#product_list li p.product_desc {
+	overflow: hidden;
+	padding:0;
+	line-height:16px;
+	opacity: 0.75;
+}
+
+#product_list li .right_block {
+	position:relative;
+	float: right;
+	width: 180px;
+	text-align: right
+}
+#product_list li .discount, ul#product_list li .on_sale, ul#product_list li .online_only {
+	display: block;
+	font-weight: bold;
+	color: #6794AA;
+	text-transform: uppercase
+}
+#product_list li .discount {
+	display: inline-block;
+	font-weight: bold;
+	font-size: 10px;
+	color: #6794AA;
+	text-transform: uppercase;
+}
+#product_list li .content_price {
+	margin:26px 0 15px 0;
+}
+	#product_list li .price {
+		display: block;
+		margin-bottom: 15px;
+		font-size: 18px;
+		font-family:'Open Sans', 'Segoe WP','Segoe UI','Ubuntu Condensed',Arial,Helvetica,sans-serif;
+	}
+	#product_list li span.availability {
+		display:none;
+		color: #488C40
+	}
+#product_list li .ajax_add_to_cart_button {
+	color:#fff;
+}
+span.exclusive {background:none; color:#333; padding:0; cursor:default; text-decoration:line-through; text-shadow:none; box-shadow:none; border:none; font-weight:normal;}
+#product_list li .ajax_add_to_cart_button span {display: none;}
+#product_list li .lnk_view {
+	display: inline-block;
+	margin-top:15px;
+	padding:0;
+	border:none;
+	font-weight:normal;
+	background:none;
+	text-shadow:none;
+	color: #333;
+}
+#product_list li .lnk_view:after {content:" »";}
+	
+/* grid view */
+.grid #product_list {
+	margin: 0 -10px;
+	width: auto; zoom:1;
+	padding: 40px 0 0;
+}
+.grid #product_list:after {
+	content: ""; display: block; overflow: hidden; clear: both; visibility: hidden;
+}
+.grid #product_list li {
+	width: 192px;
+	float: left;
+	margin: 0 50px 30px 10px;
+	border: none;
+	padding: 0;
+	position: relative;
+}
+.grid #product_list li h3 {
+	font-size: 16px; font-size: 1.6rem;
+}
+.grid #product_list li:nth-child(4n+1) {
+	clear:left;
+}
+.grid #product_list li .left_block {
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	z-index: 2;
+	padding-top: 0;
+	display: none;
+}
+.grid #product_list li:hover .left_block {
+	display: block;
+}
+.grid #product_list li .center_block {
+	float: none;
+	width: auto;
+	padding: 0;
+	border: none;
+}
+.grid #product_list a.product_img_link {
+	float: none;
+	margin: 0 0 10px;
+	display: block;
+	background: none;
+}
+.grid #product_list a.product_img_link img {
+	max-width: 100%;
+}
+.grid #product_list li .right_block {
+	float: none;
+	text-align: left;
+	width: auto;
+}
+.grid #product_list li p.product_desc {
+	display: none;
+}
+.grid #product_list li .content_price {
+	margin: 5px 0;
+}
+.grid #product_list li .lnk_view {
+	margin-top: 5px;
+}
+	
+.jq_toggle_view {float: right; margin: 0 0 0 20px; padding-top: 1px;}
+.jq_toggle_view .label {
+	vertical-align: middle;
+}
+.jq_toggle_view a {
+	display: inline-block;
+	height: 16px;
+	width: 16px;
+	margin: 0 5px;
+	cursor: pointer;
+	background: url("../img/styles/picto_grid.png") left bottom no-repeat;
+	vertical-align: middle;
+}
+.jq_toggle_view a:hover,
+.jq_toggle_view a:focus,
+.jq_toggle_view a.active {
+	background-position: left top;
+}
+.jq_toggle_view a.grid {
+	background-position: right bottom;
+}
+.jq_toggle_view a.grid:hover,
+.jq_toggle_view a.grid:focus,
+.jq_toggle_view a.grid.active {
+	background-position: right top;
+}

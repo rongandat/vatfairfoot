@@ -1,0 +1,29 @@
+/* block top currencies */
+#header #currencies_block_top {
+	float:right;
+	font-size:10px; font-size:1rem;
+	margin-left:3px;
+	text-transform:lowercase;
+}
+#header #currencies_block_top p {
+	padding:5px; background:#333 url("../../../img/styles/picto_submenu2.png") right center no-repeat; color:#ccc; padding-right:25px; cursor: pointer;
+}
+/*languages with jquery*/
+#setCurrency {
+	position: relative;
+}
+#setCurrency ul {
+	display:none;
+	z-index: 10000;
+	padding:10px;
+	color:#ccc; padding:5px;
+	background:#333;
+	position:absolute;
+	right:0;
+	left:0;
+	text-align:right;
+}
+#setCurrency:hover ul {display:block;}
+	#setCurrency ul li {float:none;}
+		#setCurrency ul li a {display:block; padding:0; padding-right:20px; color:#ccc; text-decoration: none;}
+			#setCurrency ul li a:hover, #setCurrency ul li a:focus, #setCurrency ul li.selected a {color:#fff;}

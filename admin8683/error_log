@@ -1,0 +1,13 @@
+[06-Sep-2013 06:17:03] PHP Parse error:  syntax error, unexpected T_FUNCTION in /home/precya/public_html/vatfairfoot/tools/swift/Swift/Message/Headers.php on line 424
+[09-Sep-2013 03:59:26] PHP Warning:  Division by zero in /home/precya/public_html/vatfairfoot/modules/psblog/classes/BlogPost.php on line 247
+[09-Sep-2013 03:59:26] PHP Warning:  Division by zero in /home/precya/public_html/vatfairfoot/modules/psblog/classes/BlogPost.php on line 250
+[13-Sep-2013 04:46:20] PHP Warning:  getimagesize(/home/precya/public_html/vatfairfoot/modules/psblog/uploads/1378436145.MP4) [<a href='function.getimagesize'>function.getimagesize</a>]: failed to open stream: No such file or directory in /home/precya/public_html/vatfairfoot/modules/psblog/classes/BlogPost.php on line 245
+[13-Sep-2013 04:46:20] PHP Warning:  Division by zero in /home/precya/public_html/vatfairfoot/modules/psblog/classes/BlogPost.php on line 247
+[13-Sep-2013 04:46:20] PHP Warning:  Division by zero in /home/precya/public_html/vatfairfoot/modules/psblog/classes/BlogPost.php on line 250
+[13-Sep-2013 04:46:21] PHP Warning:  Division by zero in /home/precya/public_html/vatfairfoot/modules/psblog/classes/BlogPost.php on line 247
+[13-Sep-2013 04:46:21] PHP Warning:  Division by zero in /home/precya/public_html/vatfairfoot/modules/psblog/classes/BlogPost.php on line 250
+[13-Sep-2013 04:47:40] PHP Warning:  getimagesize(/home/precya/public_html/vatfairfoot/modules/psblog/uploads/1378436145.MP4) [<a href='function.getimagesize'>function.getimagesize</a>]: failed to open stream: No such file or directory in /home/precya/public_html/vatfairfoot/modules/psblog/classes/BlogPost.php on line 245
+[13-Sep-2013 04:47:40] PHP Warning:  Division by zero in /home/precya/public_html/vatfairfoot/modules/psblog/classes/BlogPost.php on line 247
+[13-Sep-2013 04:47:40] PHP Warning:  Division by zero in /home/precya/public_html/vatfairfoot/modules/psblog/classes/BlogPost.php on line 250
+[13-Sep-2013 04:47:40] PHP Warning:  Division by zero in /home/precya/public_html/vatfairfoot/modules/psblog/classes/BlogPost.php on line 247
+[13-Sep-2013 04:47:40] PHP Warning:  Division by zero in /home/precya/public_html/vatfairfoot/modules/psblog/classes/BlogPost.php on line 250

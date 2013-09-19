@@ -1,0 +1,68 @@
+.resumecat {
+	margin:0 0 20px;
+	padding:7px 10px;
+	color:#000;
+	background:#f0f0f0;
+	/*display:inline-block;*/ display:none;
+}
+
+.content_scene_cat {margin:0 0 20px;}
+.content_scene_cat img {
+	width: 100%;
+	height: auto;
+	margin-bottom: 10px;
+}
+
+.content_scene_cat .cat_desc {
+	font-size:12px;
+	line-height:18px;
+}
+.content_scene_cat .cat_desc .lnk_more {display:none;}
+
+
+/* ************************************************************************************************
+      SUB CATEGORIES
+************************************************************************************************ */
+#subcategories {margin-top:15px}
+#subcategories h3 {text-transform:uppercase;}
+
+.inline_list {
+	list-style-type:none;
+	margin: 0 0 0;
+	border-bottom:1px solid #eee;
+	padding: 10px 0 0;
+}
+.inline_list  li {
+	position: relative;
+	float: left;
+	width: 192px;
+	margin: 0 60px 20px 0;
+	min-height: 58px;
+	background: #eee
+}
+.inline_list  li .img {
+	position: absolute;
+	left: 0;
+	top: 0;
+	max-width: 100%;
+}
+.inline_list  li .content {
+	position: relative;
+	z-index: 2;
+	padding: 10px;
+}
+.inline_list  li .content h2 {
+	background: #fff;
+	background: rgba(255,255,255,0.75);
+	padding: 0 2px;
+	display: inline;
+}
+.inline_list  li .cat_name {
+	font-weight:normal;
+	font-size:18px;
+	text-transform:uppercase; display:block;
+	margin-bottom:5px;
+	font-family:'Open Sans', 'Segoe WP', 'Segoe UI', Arial, Helvetica, sans-serif;
+}
+	.inline_list  li .cat_name:last-child {margin-bottom:0;}
+.inline_list  li p {color:#666; line-height:1.4em; margin:0 0 0 0;}

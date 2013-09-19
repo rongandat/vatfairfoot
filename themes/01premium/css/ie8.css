@@ -1,0 +1,2 @@
+.product_list li .content {display: none;}
+.product_list li a:hover .content, .product_list li a:focus .content {display: block;}

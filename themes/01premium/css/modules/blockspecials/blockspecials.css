@@ -1,0 +1,13 @@
+/* Block specials */
+
+#special_block_right .products span.price-discount {
+	font-size:12px;
+	text-decoration:line-through
+}
+#special_block_right .products span.price {
+	display:block;
+	padding:3px 0 0 0;
+	font-weight:bold;
+	font-size:14px; font-size: 1.4rem;
+	color:#6794AA;
+}

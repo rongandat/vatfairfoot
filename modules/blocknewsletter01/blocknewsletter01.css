@@ -1,0 +1,50 @@
+/* Block newsletter */
+#newsletter_block_left {
+	margin-bottom: 20px;
+}
+#newsletter_block_left p {padding:0;}
+
+#newsletter_block_left p.success_inline {
+	color: #418B19;
+	font-weight: bold;
+}
+#newsletter_block_left p.warning_inline {
+	color: #DA0F00;
+	color: rgb(206,11,16);
+	font-weight: normal;
+	font-size: 14px;
+	margin-bottom: 1em;
+}
+
+#newsletter_block_left form {
+	width: 100%;
+	position: relative;
+}
+#newsletter_block_left input.inputNew {
+	display: block;
+	padding: 0 5px;
+	width: auto;
+	border:none;
+	background: #fff;
+	width: 190px;
+	font-size: 12px; font-size: 1.2rem;
+	color: #292929;
+	box-shadow: 0 2px 3px rgba(0,0,0,0.2) inset;
+	height: 25px; height: 2.5rem;
+}
+#newsletter_block_left input.inputNew.placeholder {
+	color: #8c8c8c;
+}
+#newsletter_block_left input.button_mini {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 25px;
+	height: 25px;
+	padding: 0;
+	margin: 0;
+}
+
+#right_column #newsletter_block_left input.inputNew {
+	width: 160px;
+}

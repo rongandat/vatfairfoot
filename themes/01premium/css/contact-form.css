@@ -1,0 +1,5 @@
+
+	#contact p {margin:0; padding:0 0 10px 0;}
+	#contact fieldset p {padding:0 0 10px 10px;}
+	
+	#contact p.desc_contact {color:#666; font-style:italic;}

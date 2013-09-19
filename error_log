@@ -1,0 +1,8 @@
+[06-Sep-2013 06:16:35] PHP Parse error:  syntax error, unexpected T_FUNCTION in /home/precya/public_html/vatfairfoot/tools/swift/Swift/Message/Headers.php on line 424
+[09-Sep-2013 04:12:46] PHP Parse error:  syntax error, unexpected T_FUNCTION in /home/precya/public_html/vatfairfoot/tools/swift/Swift/Message/Headers.php on line 424
+[11-Sep-2013 03:03:49] PHP Fatal error:  Uncaught exception 'SmartyCompilerException' with message 'Syntax Error in template &quot;/home/precya/public_html/vatfairfoot/themes/01premium/contact-form.tpl&quot;  on line 138 &quot;google.load(&quot;maps&quot;, &quot;3&quot;, {'other_params':'sensor=true'});&quot;  - Unexpected &quot;:&quot;, expected one of: &quot;}&quot; , &quot; &quot; , ATTR' in /home/precya/public_html/vatfairfoot/tools/smarty/sysplugins/smarty_internal_templatecompilerbase.php:667
+Stack trace:
+#0 /home/precya/public_html/vatfairfoot/tools/smarty/sysplugins/smarty_internal_templateparser.php(3144): Smarty_Internal_TemplateCompilerBase->trigger_template_error()
+#1 /home/precya/public_html/vatfairfoot/tools/smarty/sysplugins/smarty_internal_templateparser.php(3209): Smarty_Internal_Templateparser->yy_syntax_error(2, ':')
+#2 /home/precya/public_html/vatfairfoot/tools/smarty/sysplugins/smarty_internal_smartytemplatecompiler.php(105): Smarty_Internal_Templateparser->doParse(2, ':')
+#3 /home/precya/public_html/vatfairfoot/tools/smarty/sys in /home/precya/public_html/vatfairfoot/tools/smarty/sysplugins/smarty_internal_templatecompilerbase.php on line 667

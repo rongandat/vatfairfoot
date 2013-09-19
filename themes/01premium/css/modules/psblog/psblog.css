@@ -1,0 +1,197 @@
+.medias {
+    float: left;
+    margin: 0 10px 10px 0;
+    width: 300px;
+}
+.medias .media_list {
+    margin-bottom: 5px;
+    position: relative;
+}
+.medias .media_list img {
+    border: 1px solid #DDDDDD;
+    vertical-align: bottom;
+}
+.medias .media_list #view_full_size {
+    cursor: pointer;
+    display: block;
+}
+.medias .media_list #view_full_size .span_link_container {
+    bottom: 10px;
+    display: none;
+    left: 10px;
+    position: absolute;
+    right: 10px;
+    text-align: center;
+}
+.medias .media_list #view_full_size .span_link {
+    background-color: rgba(0, 0, 0, 0.5);
+    background-image: url("../img/icon/zoom.png");
+    background-position: 10px 2px;
+    background-repeat: no-repeat;
+    border-radius: 12px 12px 12px 12px;
+    color: #FFFFFF;
+    display: inline-block;
+    line-height: 20px;
+    padding: 0 12px 0 30px;
+    text-transform: uppercase;
+}
+.medias .media_list #view_full_size .span_link:hover {
+    background-color: rgba(0, 0, 0, 0.75);
+}
+.medias .media_list #view_full_size .span_link img {
+    border: medium none;
+    left: -3px;
+    padding-right: 2px;
+    position: relative;
+    top: 3px;
+}
+.medias #views_block {
+    margin-bottom: 1em;
+    position: relative;
+}
+
+#pb-left-column {
+    overflow: auto;
+    width: auto;
+}
+#pb-left-column:after {
+    clear: both;
+    content: "";
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+    margin: 0 0 20px 0;
+}
+#pb-left-column #short_description_block p {
+    margin-bottom: 1.4em;
+}
+#pb-left-column #short_description_block .buttons_bottom_block {
+    display: none;
+}
+#buy_block .price {
+    font-family: Sanchez,Arial,Helvetica,sans-serif;
+    font-size: 1.8rem;
+}
+#pb-left-column #buy_block {
+    margin-top: 10px;
+}
+#buy_block p {
+    margin-bottom: 0;
+    padding-bottom: 10px;
+}
+#pb-left-column #buy_block label {
+    display: inline-block;
+    font-size: 1.2rem;
+    padding: 0 10px;
+    width: 100px;
+}
+p.online_only {
+    color: #6794AA;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+#pb-left-column #color_picker p {
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
+
+h1, .breadcrumb + h2 {
+    margin-top: 0;
+}
+
+#post_view .rte{ text-align:justify; }
+#post_view .medias {
+    float: left;
+    margin: 0 10px 20px 0;
+    padding: 0 30px 0 0;
+}
+#post_view .media_list ul{ margin:0; padding:0; }
+#post_view .media_list ul li{ display:block; margin:0; text-align:right; padding:0; margin-top:5px; text-align:center; }
+#post_view .media_list ul li img{ border:1px solid #EAEAEA; }
+
+#post_view .categories{ margin:20px 0; }
+#post_view .categories ul{ margin:0; padding:0; list-style-type:none; }
+#post_view .categories ul li{float:left; margin-right:3px; }
+#post_view .categories a{ text-decoration:underline; }
+
+#post_view .related{ margin:20px 0; }
+#post_view .related ul{ list-style-type:none; }
+#post_view .related a{ text-decoration:underline; }
+
+#post_view .products{ margin:20px 0; }
+#post_view .products h5{ font-size: 12px; padding:0; min-height:30px; }
+#post_view .products h5 a{ display:block; }
+#post_view .products h5 span{ font-size:10px; font-weight:normal; font-style:italic; color:#666; }
+#post_view .products p{ margin:0; padding:0; }
+#post_view .products ul{ list-style-type:none; }
+#post_view .products ul li{ padding:5px; margin: 0 10px 10px 0; background: none repeat scroll 0 0 #EEEEEE; border: 1px solid #CCCCCC; }
+#post_view .products ul li.odd{ float:left; }
+#post_view .products ul li.even{ float:right; }
+#post_view .products .text_desc{ float: left; margin-left: 10px; width: 170px;}
+#post_view .products a.content_img{ outline: medium none; display:block; float:left; display:block; }
+#post_view .addthis_toolbox{ margin:10px 0 10px 0; height:20px; overflow:hidden; }
+
+#postcomments{ margin:20px 0; }
+#postcomments .std thead th { background:none; }
+#postcomments .std tbody td p span { font-weight:bold; }
+
+#post_list ul{ margin:0; padding:0; list-style-type:none; }
+#post_list ul li{ margin:20px 0; padding:0 0 10px 0; list-style-type:none; border-bottom:1px solid #EAEAEA;  }
+#post_list ul li.first_item{ margin:8px 0; }
+#post_list ul li.last_item{ border-bottom:none; }
+#post_list ul li h3{ margin-top:0; margin-bottom:0; padding-bottom:5px; }
+
+#post_list ul li h3 a{ text-decoration:none; }
+#post_list ul li h3 a:hover{ text-decoration:underline; }
+#post_list ul li p{ padding-bottom:0; }
+#post_list ul li span{ color:#999999; font-size:10px; }
+#post_list ul li span a{ text-decoration:underline; }
+#post_list ul li .excerpt{ margin:5px 0; }
+#post_list ul li .img_default{ float:left; margin-right:5px;  }
+#post_list ul li .img_default a{ display:block; }
+#post_list ul li .img_default img{ border:1px solid #EAEAEA; }
+#post_list ul li .detail_left{ float:left; width:420px;  }
+
+#posts_home .block_content{ padding:5px 10px 5px 10px; }
+#posts_home ul{ margin:0; padding:0; list-style-type:none; }
+#posts_home ul li{
+    margin:0 0; 
+    list-style-type:none;
+}
+#posts_home ul li h3{ margin-top:0; margin-bottom:0; padding-bottom:5px; }
+#posts_home ul li h3 a{ text-decoration:none; }
+#posts_home ul li h3 a:hover{ text-decoration:underline; }
+#posts_home ul li span{ color:#999999; font-size:11px; }
+#posts_home ul li .excerpt{ 
+    margin-top:5px; 
+    font-weight: normal;
+}
+#posts_home ul li .img_default{ float:left; margin-right:5px;  }
+#posts_home ul li .img_default img{ border:1px solid #EAEAEA; }
+#posts_home ul li .detail_left{ float:left; width:400px; }
+#posts_home ul li.last_item{ border:none; }
+
+.bt_left{ float:left; }
+.bt_right{float:right; }
+.clear{ clear:both; }
+#posts_home h4 span{ font-size:10px; float:right; margin-right:5px; text-transform:none; }
+
+/* block search column */
+#post_search_block .block_content{ padding:5px; background: none repeat scroll 0 0 #EEEEEE; border: 1px solid #CCCCCC;}
+#post_search_block input[type=text]{ height: 20px; padding: 0 5px; }
+#post_search_block p{ padding:6px 0; font-weight:bold; }
+
+#last_posts_block li{ padding:5px; }
+#last_posts_block li a{ background: none; padding: 0; }
+
+#module-psblog-posts h1 {
+    font-size: 1.8rem;
+    font-weight: 400;
+    line-height: normal;
+}
+
+#module-psblog-posts .jcarousel-container {
+    margin-bottom: 20px;
+}
