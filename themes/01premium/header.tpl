@@ -85,9 +85,8 @@
 				</a>
 				{$HOOK_TOP}
 			</header>
-
 			<div id="content">
-				{if $page_name != 'index' && $page_name != 'module-psblog-posts'}
+				{if $page_name != 'index' && $page_name != 'module-psblog-posts' && $page_name != 'module-myphotos-post'}
 				<div id="main">
 				{/if}
 	{/if}

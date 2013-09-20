@@ -28,7 +28,7 @@
 <div id="best-sellers_block_center" class="block products_block">
 	<h1>{l s='New products' mod='blocknewproducts'}</h1>{* | <a href="{$link->getPageLink('new-products.php')}">{l s='All new products' mod='blocknewproducts'}</a><br />*}
 	{if isset($new_products) AND $new_products}
-		<ul class="product_list{*if $new_products|@count > 5*} jq_carousel_home{*/if*}">
+		<ul class="product_list">
 		{foreach from=$new_products item=product name=myLoop}
 			<li class="ajax_block_product">
 				<a href="{$product.link}">

@@ -233,7 +233,7 @@ abstract class ObjectModelCore
 			}
 			else
 				$object_datas = Cache::retrieve($cache_id);
-
+                            
 			if ($object_datas)
 			{
 				$this->id = (int)$id;

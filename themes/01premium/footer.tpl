@@ -24,7 +24,7 @@
 *  International Registered Trademark & Property of PrestaShop SA
 *}
 		{if !$content_only}
-				{if $page_name != 'index' && $page_name != 'module-psblog-posts'}
+				{if $page_name != 'index' && $page_name != 'module-psblog-posts' && $page_name != 'module-myphotos-post'}
 				</div>
 				<!-- /#main end -->
 
@@ -38,7 +38,6 @@
 <!-- Footer -->
 			<footer id="footer" {if $logo_image_height}style="min-height:{$logo_image_height}px;"{/if}>
 				{$HOOK_FOOTER}
-				
 			</footer>
 		</div>
 	{/if}
