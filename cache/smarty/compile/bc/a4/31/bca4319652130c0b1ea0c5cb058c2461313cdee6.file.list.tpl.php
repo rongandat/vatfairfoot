@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.14, created on 2013-09-19 08:00:09
+<?php /* Smarty version Smarty-3.1.14, created on 2013-09-20 00:58:43
          compiled from "E:\xampp\htdocs\vatfairfoot\modules\myphotos\views\templates\front\list.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:15314523abac01c4a04-08029587%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'bca4319652130c0b1ea0c5cb058c2461313cdee6' => 
     array (
       0 => 'E:\\xampp\\htdocs\\vatfairfoot\\modules\\myphotos\\views\\templates\\front\\list.tpl',
-      1 => 1379592006,
+      1 => 1379593092,
       2 => 'file',
     ),
   ),
@@ -28,8 +28,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_523abac03204d2_31938103')) {function content_523abac03204d2_31938103($_smarty_tpl) {?><?php if (!is_callable('smarty_modifier_escape')) include 'E:\\xampp\\htdocs\\vatfairfoot\\tools\\smarty\\plugins\\modifier.escape.php';
-?><link href="/vatfairfoot/js/jquery/plugins/fancybox/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
-<script type="text/javascript" src="/vatfairfoot/js/jquery/plugins/fancybox/jquery.fancybox.js"></script>
+?><link href="/js/jquery/plugins/fancybox/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
+<script type="text/javascript" src="/js/jquery/plugins/fancybox/jquery.fancybox.js"></script>
 <?php $_smarty_tpl->tpl_vars["i"] = new Smarty_variable("0", null, 0);?>
 <?php  $_smarty_tpl->tpl_vars['category'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['category']->_loop = false;
  $_from = $_smarty_tpl->tpl_vars['list_categories']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}

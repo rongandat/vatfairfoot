@@ -1,134 +1,61 @@
 <?php
 
-/**
- * Prestanews module
- *
- * @author Appside
- * @copyright Appside
- * @version 1.5
- *
- */
-
+if (!defined('_PS_VERSION_'))
+    exit;
+define('_PS_PSNEWS_IMG_DIR_', _PS_IMG_DIR_ . 'psn/');
 
 class Psnews extends Module {
 
     private $_html = '';
     private $_postErrors = array();
-    private static $pref = null;
+    private static $prefnews = null;
     public static $default_values = array(
-        "nb_max_img" => 0,
-        "nb_max_video" => 0,
         "img_width" => 200,
         "img_list_width" => 100,
         "category_active" => 1,
-        "product_active" => 1,
-        "related_active" => 1,
-        "product_page_related" => 1,
-        "product_img_format" => "medium_default",
-        "comment_active" => 1,
-        "comment_moderate" => 1,
-        "comment_guest" => 1,
-        "comment_min_time" => 20,
-        "comment_name_min_length" => 2,
         "view_display_date" => 1,
         "view_display_popin" => 1,
-        "list_limit_page" => 5,
         "list_display_date" => 1,
-        "file_formats" => "jpg|jpeg|png|gif|mp4|wmv|flv",
-        "img_save_path" => "modules/psnews/uploads/",
-        "rss_active" => 1,
-        "rss_display" => "excerpt",
-        "share_active" => 1);
+        'list_news_limit_page' => 15
+    );
 
     public function __construct() {
         $this->name = 'psnews';
-        $this->version = '1.5.2';
-        $this->module_key = "2eb7d51fcd2897494f1d594063c940cc";
-        $this->need_instance = 0;
         $this->tab = 'front_office_features';
-
+        $this->version = '1.0';
+        $this->author = 'Huyen Nguyen';
+        $this->need_instance = 0;
         parent::__construct();
-
         $this->checkServerConf();
 
-        $this->author = 'APPSIDE';
-        $this->displayName = $this->l('Prestanews');
-        $this->description = $this->l('News module, articles, categories, comments and products related');
+        $this->displayName = $this->l('News');
+        $this->description = $this->l('Add a News View on your page.');
     }
 
     public function install() {
+
         if (!parent::install())
+            return false;
+        if (!$this->registerHook('header') OR !$this->registerHook('actionHtaccessCreate') OR !$this->registerHook('productTab') OR !$this->registerHook('productTabContent'))
             return false;
         if (!Configuration::updateValue('PSNEWS_CONF', base64_encode(serialize(self::$default_values))))
             return false;
-
-        Configuration::updateValue('PSNEWS_VERSION', $this->version);
-
+        if (!is_dir(_PS_PSNEWS_IMG_DIR_))
+            mkdir(_PS_PSNEWS_IMG_DIR_);
         $this->createAdminTabs();
-
-        @copy(dirname(__FILE__) . "/AdminNews.gif", _PS_ROOT_DIR_ . "/img/t/AdminNews.gif");
-
-        if (!$this->registerHook('header') OR !$this->registerHook('actionHtaccessCreate') OR !$this->registerHook('productTab') OR !$this->registerHook('productTabContent'))
-            return false;
-
+        
         require_once(dirname(__FILE__) . '/install-sql.php');
-
-        $this->generateRewriteRules();
-
         return true;
     }
-
-    private function createAdminTabs() {
-
-        $langs = Language::getLanguages();
-        $id_lang = (int) Configuration::get('PS_LANG_DEFAULT');
-
-        /*         * ** create tab publications *** */
-
-        $tab0 = new Tab();
-        $tab0->class_name = "AdminNews";
-        $tab0->module = "psblog";
-        $tab0->id_parent = 0;
-        foreach ($langs as $l) {
-            $tab0->name[$l['id_lang']] = $this->l('News');
-        }
-        $tab0->save();
-        $blog_tab_id = $tab0->id;
-
-        $tab1 = new Tab();
-        $tab1->class_name = "AdminNews";
-        $tab1->module = "psnews";
-        $tab1->id_parent = $blog_tab_id;
-        foreach ($langs as $l) {
-            $tab1->name[$l['id_lang']] = $this->l('News posts');
-        }
-        $tab1->save();
-
-       
-
-        /*         * * RIGHTS MANAGEMENT ** */
-        Db::getInstance()->Execute('DELETE FROM ' . _DB_PREFIX_ . 'access 
-                                        WHERE `id_tab` = ' . (int) $tab0->id . ' 
-                                            OR `id_tab` = ' . (int) $tab1->id);
-
-        Db::getInstance()->Execute('DELETE FROM ' . _DB_PREFIX_ . 'module_access WHERE `id_module` = ' . (int) $this->id);
-
-        $profiles = Profile::getProfiles($id_lang);
-
-        if (count($profiles)) {
-            foreach ($profiles as $p) {
-
-                Db::getInstance()->Execute('INSERT IGNORE INTO `' . _DB_PREFIX_ . 'access`(`id_profile`,`id_tab`,`view`,`add`,`edit`,`delete`) 
-                                                 VALUES (' . $p['id_profile'] . ', ' . (int) $tab0->id . ',1,1,1,1)');
-
-                Db::getInstance()->Execute('INSERT IGNORE INTO `' . _DB_PREFIX_ . 'access`(`id_profile`,`id_tab`,`view`,`add`,`edit`,`delete`) 
-                                                 VALUES (' . $p['id_profile'] . ', ' . (int) $tab1->id . ',1,1,1,1)');
-
-               
-            }
-        }
+    
+     public function hookActionHtaccessCreate($params) {
+        $this->generateRewriteRules();
     }
+    
+    
 
+    
+    
     private function generateRewriteRules() {
 
         if (Configuration::get('PS_REWRITING_SETTINGS')) {
@@ -140,9 +67,8 @@ class Psnews extends Module {
                 if (in_array($shop_url->physical_uri, $physical_uri))
                     continue;
 
-                $rules .= "RewriteRule ^(.*)news$ " . $shop_url->physical_uri . "index.php?fc=module&module=psnews&controller=posts [QSA,L] \n";
-                $rules .= "RewriteRule ^(.*)news/([0-9]+)\-([a-zA-Z0-9-]*) " . $shop_url->physical_uri . "index.php?fc=module&module=psnews&controller=posts&post=$2 [QSA,L] \n";
-                $rules .= "RewriteRule ^(.*)news/category/([0-9]+)\-([a-zA-Z0-9-]*) " . $shop_url->physical_uri . "index.php?fc=module&module=psnews&controller=posts&category=$2 [QSA,L] \n";
+                $rules .= "RewriteRule ^(.*)news$ " . $shop_url->physical_uri . "index.php?fc=module&module=psnews&controller=news [QSA,L] \n";
+                $rules .= "RewriteRule ^(.*)news/([0-9]+)\-([a-zA-Z0-9-]*) " . $shop_url->physical_uri . "index.php?fc=module&module=psnews&controller=news&news=$2 [QSA,L] \n";
 
                 $physical_uri[] = $shop_url->physical_uri;
             }
@@ -162,61 +88,21 @@ class Psnews extends Module {
             }
         }
     }
-
-    public function hookActionHtaccessCreate($params) {
-        $this->generateRewriteRules();
-    }
-
-    public function uninstall() {
-        /*         * ** delete AdminPsnews tab *** */
-        $tab_id = Tab::getIdFromClassName("AdminNews");
-        if ($tab_id) {
-            $tab = new Tab($tab_id);
-            $tab->delete();
-        }
-
-        /*         * ** delete AdminPsnewsPosts tab *** */
-        $tab_id = Tab::getIdFromClassName("AdminNewsPosts");
-        if ($tab_id) {
-            $tab = new Tab($tab_id);
-            $tab->delete();
-        }
-
-        @unlink(_PS_ROOT_DIR_ . "/img/t/AdminNews.gif");
-
-        if (!Configuration::deleteByName('PSNEWS_CONF') OR !parent::uninstall())
-            return false;
-        return true;
-    }
-
-    public function hookHeader($params) {
-        $this->context->controller->addCSS($this->_path . 'psnews.css', 'all');
-    }
-
-    public function hookProductTab($params) {
-
-        require_once(dirname(__FILE__) . "/classes/NewsPost.php");
-
-        $id_product = (int) $_GET['id_product'];
-        $nb = NewsPost::listPosts(true, true, null, null, true, null, $id_product, null);
-        if ($nb > 0)
-            return $this->display(__FILE__, 'views/templates/front/product-tabtitle.tpl');
-    }
-
+    
     public function hookProductTabContent($params) {
 
         $id_product = (int) $_GET['id_product'];
         if (!$id_product)
             return false;
 
-        require_once(dirname(__FILE__) . "/classes/NewsPost.php");
+        require_once(dirname(__FILE__) . "/classes/BlogPost.php");
 
-        $list = NewsPost::listPosts(true, true, null, null, false, null, $id_product, null);
+        $list = BlogPost::listPosts(true, true, null, null, false, null, $id_product, null);
 
         if ($list) {
             $i = 0;
             foreach ($list as $val) {
-                $list[$i]['link'] = NewsPost::linkPost($val['id_news_post'], $val['link_rewrite'], $val['id_lang']);
+                $list[$i]['link'] = BlogPost::linkPost($val['id_news_post'], $val['link_rewrite'], $val['id_lang']);
                 $i++;
             }
         }
@@ -224,56 +110,150 @@ class Psnews extends Module {
         return $this->display(__FILE__, 'views/templates/front/product-tabcontent.tpl');
     }
 
-    /** various product page hooks * */
-    public function hookExtraLeft($params) {
-        return $this->hookProductTabContent($params);
+    
+    public function hookHeader($params) {
+        $this->context->controller->addCSS($this->_path . 'psnews.css', 'all');
     }
 
-    public function hookProductFooter($params) {
-        return $this->hookProductTabContent($params);
+    public function hookProductTab($params) {
+
+        require_once(dirname(__FILE__) . "/classes/BlogPost.php");
+
+        $id_product = (int) $_GET['id_product'];
+        $nb = BlogPost::listPosts(true, true, null, null, true, null, $id_product, null);
+        if ($nb > 0)
+            return $this->display(__FILE__, 'views/templates/front/product-tabtitle.tpl');
     }
 
-    public function hookExtra($params) {
-        return $this->hookProductTabContent($params);
+
+
+    private function createAdminTabs() {
+
+        $langs = Language::getLanguages();
+        $id_lang = (int) Configuration::get('PS_LANG_DEFAULT');
+
+        /*         * ** create tab publications *** */
+
+        $tab0 = new Tab();
+        $tab0->class_name = "AdminNews";
+        $tab0->module = "psnews";
+        $tab0->id_parent = 0;
+        foreach ($langs as $l) {
+            $tab0->name[$l['id_lang']] = $this->l('News');
+        }
+        $tab0->save();
+        $news_tab_id = $tab0->id;
+
+        $tab1 = new Tab();
+        $tab1->class_name = "AdminNews";
+        $tab1->module = "psnews";
+        $tab1->id_parent = $news_tab_id;
+        foreach ($langs as $l) {
+            $tab1->name[$l['id_lang']] = $this->l('News');
+        }
+        $tab1->save();
+
+
+        /*         * * RIGHTS MANAGEMENT ** */
+        Db::getInstance()->Execute('DELETE FROM ' . _DB_PREFIX_ . 'access 
+                                        WHERE `id_tab` = ' . (int) $tab0->id . ' 
+                                            OR `id_tab` = ' . (int) $tab1->id);
+
+        Db::getInstance()->Execute('DELETE FROM ' . _DB_PREFIX_ . 'module_access WHERE `id_module` = ' . (int) $this->id);
+
+        $profiles = Profile::getProfiles($id_lang);
+
+        if (count($profiles)) {
+            foreach ($profiles as $p) {
+
+                Db::getInstance()->Execute('INSERT IGNORE INTO `' . _DB_PREFIX_ . 'access`(`id_profile`,`id_tab`,`view`,`add`,`edit`,`delete`) 
+                                                 VALUES (' . $p['id_profile'] . ', ' . (int) $tab0->id . ',1,1,1,1)');
+
+                Db::getInstance()->Execute('INSERT IGNORE INTO `' . _DB_PREFIX_ . 'access`(`id_profile`,`id_tab`,`view`,`add`,`edit`,`delete`) 
+                                                 VALUES (' . $p['id_profile'] . ', ' . (int) $tab1->id . ',1,1,1,1)');
+
+
+
+                Db::getInstance()->execute('INSERT INTO ' . _DB_PREFIX_ . 'module_access(`id_profile`, `id_module`, `configure`, `view`)
+                                                VALUES (' . $p['id_profile'] . ',' . (int) $this->id . ',1,1)');
+            }
+        }
     }
 
-    public function hookExtraRight($params) {
-        return $this->hookProductTabContent($params);
+    private function _displayForm() {
+        $values = (isset($_POST) && isset($_POST['submitPsnews'])) ? Tools::getValue('prefnews') : array_merge(self::$default_values, self::getPreferences());
+        $this->_html .='
+		
+		<form action="' . $_SERVER['REQUEST_URI'] . '" method="post">';
+        $this->_html .= '<fieldset>
+				
+                                <label>' . $this->l('Number of articles per page') . '</label> 
+                <div class="margin-form">
+                <input type="text" name="prefnews[list_news_limit_page]" value="' . $values['list_news_limit_page'] . '" size="3" />
+                </div><div class="clear"></div><br />
+				
+				<div class="clear"></div><br /></fieldset>';
+
+        $this->_html .= '<div class="clear"></div>
+		
+                    <input class="button" name="submitPsnews" value="' . $this->l('Update settings') . '" type="submit" />';
+
+        $this->_html .='
+		
+		</form>';
+    }
+
+    public function uninstall() {
+        $tab_id = Tab::getIdFromClassName("AdminNews");
+        if ($tab_id) {
+            $tab = new Tab($tab_id);
+            $tab->delete();
+        }
+
+        $tab_id = Tab::getIdFromClassName("AdminNews");
+        if ($tab_id) {
+            $tab = new Tab($tab_id);
+            $tab->delete();
+        }
+
+        if (!Configuration::deleteByName('PSNEWS_CONF') OR !parent::uninstall())
+            return false;
+        return true;
     }
 
     public static function getPreferences() {
-        if (is_null(self::$pref)) {
+        if (is_null(self::$prefnews)) {
             $config = Configuration::get('PSNEWS_CONF');
             $options = self::$default_values;
 
             if ($config)
                 $options = array_merge($options, unserialize(base64_decode($config)));
-            self::$pref = $options;
+            self::$prefnews = $options;
         }
-        return self::$pref;
+        return self::$prefnews;
     }
 
     public function checkServerConf() {
-        $pref = self::getPreferences();
-        $this->warning = '';
-        if (!is_writable(_PS_ROOT_DIR_ . '/' . $pref['img_save_path'])) {
-            $this->warning .= _PS_ROOT_DIR_ . '/' . $pref['img_save_path'] . ' ' . $this->l('must be writable') . "<br />";
-        }
-        if (!is_writable(_PS_ROOT_DIR_ . '/' . $pref['img_save_path'] . 'thumb/')) {
-            $this->warning .= _PS_ROOT_DIR_ . '/' . $pref['img_save_path'] . 'thumb/ ' . $this->l('must be writable') . "<br />";
-        }
-        if (!is_writable(_PS_ROOT_DIR_ . '/' . $pref['img_save_path'] . 'list/')) {
-            $this->warning .= _PS_ROOT_DIR_ . '/' . $pref['img_save_path'] . 'list/ ' . $this->l('must be writable') . "<br />";
-        }
+//        $prefnews = self::getPreferences();
+//        $this->warning = '';
+//        if (!is_writable(_PS_ROOT_DIR_ . '/' . $prefnews['img_save_path'])) {
+//            $this->warning .= _PS_ROOT_DIR_ . '/' . $prefnews['img_save_path'] . ' ' . $this->l('must be writable') . "<br />";
+//        }
+//        if (!is_writable(_PS_ROOT_DIR_ . '/' . $prefnews['img_save_path'] . 'thumb/')) {
+//            $this->warning .= _PS_ROOT_DIR_ . '/' . $prefnews['img_save_path'] . 'thumb/ ' . $this->l('must be writable') . "<br />";
+//        }
+//        if (!is_writable(_PS_ROOT_DIR_ . '/' . $prefnews['img_save_path'] . 'list/')) {
+//            $this->warning .= _PS_ROOT_DIR_ . '/' . $prefnews['img_save_path'] . 'list/ ' . $this->l('must be writable') . "<br />";
+//        }
     }
 
     private function _postValidation() {
 
-        $numericValues = array('img_width', 'img_list_width', 'list_limit_page', 'comment_min_time', 'comment_name_min_length');
+        $numericValues = array('list_news_limit_page');
 
         if (isset($_POST['submitPsnews'])) {
             foreach ($numericValues as $val) {
-                if (empty($_POST['pref'][$val]) || !is_numeric($_POST['pref'][$val])) {
+                if (empty($_POST['prefnews'][$val]) || !is_numeric($_POST['prefnews'][$val])) {
                     $this->_postErrors[] = $val . $this->l(' must be a numeric value');
                 }
             }
@@ -282,7 +262,7 @@ class Psnews extends Module {
 
     private function _postProcess() {
         if (Tools::isSubmit('submitPsnews')) {
-            $pref = $_POST['pref'];
+            $prefnews = $_POST['prefnews'];
             $old_values = self::getPreferences();
 
             $checkboxes = array('category_active', 'product_active', 'comment_active', 'comment_moderate',
@@ -290,278 +270,39 @@ class Psnews extends Module {
                 'view_display_popin', 'rewrite_active', 'product_page_related', 'rss_active', 'share_active');
 
             foreach ($checkboxes as $input) {
-                if (!isset($pref[$input]))
-                    $pref[$input] = 0;
+                if (!isset($prefnews[$input]))
+                    $prefnews[$input] = 0;
             }
 
-            $new_values = array_merge(self::$default_values, $pref);
-            Configuration::updateValue('PSNEWS_CONF', base64_encode(serialize($new_values)));
+            $new_values = array_merge(self::$default_values, $prefnews);
+            Configuration::updateValue('PSBLOG_CONF', base64_encode(serialize($new_values)));
 
-            if ($new_values['product_page_related'] != $old_values['product_page_related']) {
-                if ($new_values['product_page_related'] == 1) {
-                    $this->registerHook('productTab');
-                    $this->registerHook('productTabContent');
-                } else {
-                    $this->unregisterHook(Hook::getIdByName('productTab'));
-                    $this->unregisterHook(Hook::getIdByName('productTabContent'));
-                }
-            }
 
             $this->_html .= '<div class="conf confirm">' . $this->l('Settings updated') . '</div>';
         } elseif (Tools::isSubmit('submitGenerateImg')) {
 
-            include_once(_PS_MODULE_DIR_ . "psnews/classes/NewsPost.php");
+            include_once(_PS_MODULE_DIR_ . "psnews/classes/BlogPost.php");
 
-            $images = NewsPost::getAllImages();
-            $save_path = _PS_ROOT_DIR_ . '/' . rtrim(self::$pref['img_save_path'], '/') . "/";
+            $images = BlogPost::getAllImages();
+            $save_path = _PS_ROOT_DIR_ . '/' . rtrim(self::$prefnews['img_save_path'], '/') . "/";
 
             foreach ($images as $img) {
 
                 @unlink($save_path . 'thumb/' . $img['img_name']);
                 @unlink($save_path . 'list/' . $img['img_name']);
 
-                NewsPost::generateImageThumbs($img['id_news_image']);
+                BlogPost::generateImageThumbs($img['id_news_image']);
             }
 
             $this->_html .= '<div class="conf confirm">' . $this->l('Images regenerated') . '</div>';
         } elseif (Tools::isSubmit('submitGenerateSitemap')) {
 
-            include_once(_PS_MODULE_DIR_ . "psnews/classes/NewsShop.php");
+            include_once(_PS_MODULE_DIR_ . "psnews/classes/BlogShop.php");
 
-            NewsShop::generateSitemap();
+            BlogShop::generateSitemap();
 
             $this->_html .= '<div class="conf confirm">' . $this->l('Google sitemap regenerated') . '</div>';
         }
-    }
-
-    private function _displayForm() {
-
-        $values = (isset($_POST) && isset($_POST['submitPsnews'])) ? Tools::getValue('pref') : array_merge(self::$default_values, self::getPreferences());
-
-        $this->_html .='
-		
-		<form action="' . $_SERVER['REQUEST_URI'] . '" method="post">
-		<fieldset>
-		<legend>' . $this->l('General') . '</legend>
-			
-		
-		<label>' . $this->l('Active categories') . '</label>  
-		<div class="margin-form">
-		<input type="checkbox" name="pref[category_active]" value="1" ' . ((isset($values['category_active']) && $values['category_active'] == '1') ? 'checked' : '') . ' />
-		</div>
-		<div class="clear"></div>
-		
-		<label>' . $this->l('Active products') . '</label>  
-		<div class="margin-form">
-		<input type="checkbox" name="pref[product_active]" value="1" ' . ((isset($values['product_active']) && $values['product_active'] == '1') ? 'checked' : '') . ' />
-		</div>
-		<div class="clear"></div>
-		
-		<label>' . $this->l('Active comments') . '</label>  
-		<div class="margin-form">
-		<input type="checkbox" name="pref[comment_active]" value="1" ' . ((isset($values['comment_active']) && $values['comment_active'] == '1') ? 'checked' : '') . ' />
-		</div>
-		<div class="clear"></div>
-		
-		<label>' . $this->l('Enable related articles') . '</label>  
-		<div class="margin-form">
-		<input type="checkbox" name="pref[related_active]" value="1" ' . ((isset($values['related_active']) && $values['related_active'] == '1') ? 'checked' : '') . ' />
-		</div>';
-
-
-        $this->_html .= '
-			</fieldset>
-			<br /><div class="clear"></div>';
-
-        $this->_html .= '<fieldset>
-                <legend>' . $this->l('List settings') . '</legend>
-
-                <label>' . $this->l('Number of articles per page') . '</label> 
-                <div class="margin-form">
-                <input type="text" name="pref[list_limit_page]" value="' . $values['list_limit_page'] . '" size="3" />
-                </div><div class="clear"></div><br />
-
-                <label>' . $this->l('Display date') . '</label>  
-                <div class="margin-form">
-                <input type="checkbox" name="pref[list_display_date]" value="1" ' . ((isset($values['list_display_date']) && $values['list_display_date'] == '1') ? 'checked' : '') . '/>
-                </div><div class="clear"></div><br />
-
-                <label>' . $this->l('Image width in lists') . '</label>
-                <div class="margin-form">
-                        <input type="text" name="pref[img_list_width]" value="' . $values['img_list_width'] . '" size="3" /> px
-                </div>';
-
-        $this->_html .= '</fieldset><br /><div class="clear"></div>';
-
-        $this->_html .= '<fieldset>
-				
-                                <legend>' . $this->l('View settings') . '</legend>
-		
-				<label>' . $this->l('Image width in article detail') . '</label>
-				<div class="margin-form">
-					<input type="text" name="pref[img_width]" value="' . $values['img_width'] . '" size="3" /> px
-				</div><div class="clear"></div><br />
-				
-				<label>' . $this->l('Enable popin for images') . '</label>  
-					<div class="margin-form">
-					<input type="checkbox" name="pref[view_display_popin]" value="1" ' . ((isset($values['view_display_popin']) && $values['view_display_popin'] == '1') ? 'checked' : '') . '/>
-				</div>
-				
-				<div class="clear"></div><br />
-				
-				<label>' . $this->l('Display date') . '</label>  
-				<div class="margin-form">
-				<input type="checkbox" name="pref[view_display_date]" value="1" ' . ((isset($values['view_display_date']) && $values['view_display_date'] == '1') ? 'checked' : '') . '/>
-				</div>
-				
-				<div class="clear"></div><br />';
-
-        $this->_html .= '<label>' . $this->l('Active Addthis') . '</label>  
-				<div class="margin-form">
-					<input type="checkbox" name="pref[share_active]" value="1" ' . ((isset($values['share_active']) && $values['share_active'] == '1') ? 'checked' : '') . ' />
-				</div>
-				
-				</fieldset>
-				<div class="clear"></div><br />';
-
-        $this->_html .= '<fieldset>
-                                <legend>' . $this->l('Related products settings') . '</legend>
-				
-                                <label>' . $this->l('Enable related articles in product page') . '</label>  
-                                <div class="margin-form">
-                                <input type="checkbox" name="pref[product_page_related]" value="1" ' . ((isset($values['product_page_related']) && $values['product_page_related'] == '1') ? 'checked' : '') . '/>
-                                </div><div class="clear"></div><br />';
-
-        $formats = ImageType::getImagesTypes();
-
-        $this->_html .= '<label>' . $this->l('Product image format') . '</label>  
-                                  <div class="margin-form">
-                                      <select name="pref[product_img_format]">';
-        foreach ($formats as $f) {
-            $this->_html .= '<option value="' . $f['name'] . '" ' . ($values['product_img_format'] == $f['name'] ? "selected" : "") . '>' . $f['name'] . ' &nbsp;</option>';
-        }
-        $this->_html .= '</select>
-                                 </div>';
-
-        $this->_html .= '</fieldset><div class="clear"></div><br />';
-
-        $this->_html .= '<fieldset>
-                                        
-                                <legend>' . $this->l('Comments settings') . '</legend>
-
-                                <label>' . $this->l('All comments must be validated by an employee') . '</label>  
-                                <div class="margin-form">
-                                <input type="checkbox" name="pref[comment_moderate]" value="1" ' . ((isset($values['comment_moderate']) && $values['comment_moderate'] == '1') ? 'checked' : '') . '/>
-                                </div>
-
-                                <div class="clear"></div><br />
-
-                                <label>' . $this->l('Allow guest comments') . '</label>  
-                                <div class="margin-form">
-                                <input type="checkbox" name="pref[comment_guest]" value="1" ' . ((isset($values['comment_guest']) && $values['comment_guest'] == '1') ? 'checked' : '') . '/>
-                                </div>
-
-                                <div class="clear"></div><br />
-
-                                <label>' . $this->l('Minimum time between 2 comments from the same user') . '</label>
-                                <div class="margin-form">
-                                        <input name="pref[comment_min_time]" type="text" class="text" value="' . $values['comment_min_time'] . '" style="width: 40px; text-align: right;" /> ' . $this->l('seconds') . '
-                                </div>
-
-                                <div class="clear"></div><br />
-
-                                <label>' . $this->l('Minimum length of user name') . '</label>
-                                <div class="margin-form">
-                                        <input name="pref[comment_name_min_length]" type="text" class="text" value="' . $values['comment_name_min_length'] . '" style="width: 40px; text-align: right;" /> ' . $this->l('characters') . '
-                                </div>';
-
-        $this->_html .= '</fieldset>';
-
-        $this->_html .= '<div class="clear"></div><br />';
-
-        $this->_html .= '<fieldset>
-                            
-                            <legend>' . $this->l('RSS settings') . '</legend>
-
-                            <label>' . $this->l('Enable RSS feed') . '</label>  
-                            <div class="margin-form">
-                            <input type="checkbox" name="pref[rss_active]" value="1" ' . ((isset($values['rss_active']) && $values['rss_active'] == '1') ? 'checked' : '') . '/>
-                            </div>
-
-                            <div class="clear"></div><br />
-
-                            <label>' . $this->l('Post field used for content') . '</label> 
-                            <div class="margin-form">
-                                    <select name="pref[rss_display]">
-                                            <option value="excerpt" ' . ($values['rss_display'] == "excerpt" ? "selected" : "") . '>' . $this->l('Excerpt') . ' &nbsp;</option>
-                                            <option value="content" ' . ($values['rss_display'] == "content" ? "selected" : "") . '>' . $this->l('Content') . ' &nbsp;</option>
-                                    </select>
-                            </div>';
-
-        $this->_html .= '</fieldset><div class="clear"></div><br />';
-
-        $this->_html .= '<div class="clear"></div>
-		
-                    <input class="button" name="submitPsnews" value="' . $this->l('Update settings') . '" type="submit" />';
-
-        $this->_html .= '<div class="clear"></div><br /><br />';
-
-        $this->_html .= '<fieldset>
-                            
-                                <legend>' . $this->l('Tools') . '</legend>
-                                
-                                 <p>
-                                 <input class="button" name="submitGenerateImg" value="' . $this->l('Regenerate all news images') . '" type="submit" />
-                                 &nbsp; ' . $this->l('Useful if you change the images sizes') . '
-                                 </p>';
-
-        if (self::isInstalled('gsitemap')) {
-
-            $this->_html .= '<p>
-                                        <input class="button" name="submitGenerateSitemap" value="' . $this->l('Regenerate Google sitemap') . '" type="submit" /> 
-                                            &nbsp; <a href="' . _PS_BASE_URL_ . __PS_BASE_URI__ . 'modules/psnews/sitemap-news.xml" target="_blank">' . _PS_BASE_URL_ . __PS_BASE_URI__ . 'modules/psnews/sitemap-news.xml</a> ' . '
-                                    </p>';
-        }
-
-        $this->_html .= '<div class="multishop_info">
-                            <p>
-                            ' . $this->l('If url rewriting doesn\'t works, check that this above lines exist in your current .htaccess file, if no, add it manually on top of your .htaccess file') . ': <br /><br />
-
-                                  <strong>';
-        $physical_uri = array();
-        foreach (ShopUrl::getShopUrls() as $shop_url) {
-            if (in_array($shop_url->physical_uri, $physical_uri))
-                continue;
-
-            $this->_html .= "RewriteRule ^(.*)news$ " . $shop_url->physical_uri . "index.php?fc=module&module=psnews&controller=posts [QSA,L] <br />";
-            $this->_html .= "RewriteRule ^(.*)news/([0-9]+)\-([a-zA-Z0-9-]*) " . $shop_url->physical_uri . "index.php?fc=module&module=psnews&controller=posts&post=$2 [QSA,L] <br />";
-            $this->_html .= "RewriteRule ^(.*)news/category/([0-9]+)\-([a-zA-Z0-9-]*) " . $shop_url->physical_uri . "index.php?fc=module&module=psnews&controller=posts&category=$2 [QSA,L] <br />";
-
-            $physical_uri[] = $shop_url->physical_uri;
-        }
-
-        $this->_html .= '</strong>
-                                </p>
-                              </div>';
-
-        $this->_html .= '<div class="multishop_info">
-                            <p>
-                            ' . $this->l('To declare news sitemap xml, add this line at the end of your robots.txt file') . ': <br /><br />
-
-                                  <strong>
-                                    Sitemap ' . _PS_BASE_URL_ . __PS_BASE_URI__ . 'modules/psnews/sitemap-news.xml
-                                 </strong>
-                            </p>
-                </div>';
-
-        $this->_html .= '</fieldset>
-                    						
-		</form>';
-    }
-
-    public static function getRewriteConf() {
-        self::getPreferences();
-        return self::$pref['rewrite_active'];
     }
 
     public function getContent() {
@@ -572,7 +313,7 @@ class Psnews extends Module {
 
         $this->_html .= '<h2>' . $this->l('Prestanews settings') . '</h2>';
 
-        $this->_html .= '<p>' . $this->l('If you want to add articles, you must go to the News tab on the navigation menu') . '</p>';
+        $this->_html .= '<p>' . $this->l('If you want to add articles, you must go to the Blog tab on the navigation menu') . '</p>';
 
         if (isset($_POST)) {
             $this->_postValidation();
@@ -588,5 +329,9 @@ class Psnews extends Module {
         $this->_displayForm();
         return $this->_html;
     }
+    
+    
 
 }
+
+?>
