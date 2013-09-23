@@ -10,6 +10,7 @@
  *
  */
 define('_PS_MYPHOTO_IMG_DIR_', _PS_IMG_DIR_ . 'myphoto/');
+require_once(_PS_MODULE_DIR_ . 'myphotos/classes/Photos.php');
 
 class PhotosCategory extends ObjectModel {
 
@@ -84,7 +85,7 @@ class PhotosCategory extends ObjectModel {
         return Db::getInstance()->ExecuteS($query);
     }
 
-    public static function getCategories($start = 0, $limit = null,$publish = true ) {
+    public static function getCategories($start = 0, $limit = null, $publish = true) {
         $query = ' Select * from ' . _DB_PREFIX_ . 'photo_cat pc ';
 
         $query .= ' LEFT JOIN ' . _DB_PREFIX_ . 'photo_cat_lang pcl ON pc.id_photo_cat = pcl.id_photo_cat';
@@ -94,14 +95,33 @@ class PhotosCategory extends ObjectModel {
         $context = Context::getContext();
         $query .= ' AND pcl.id_lang = ' . $context->language->id;
 
-        if($publish)
+        if ($publish)
             $query .= ' AND pc.active = 1';
-        
+        $query .= ' ORDER BY pc.`position` ASC, pcl.`name` ASC';
         if (!is_null($limit))
             $query .= ' LIMIT ' . $start . ',' . $limit;
-        
-            
+
+
         return Db::getInstance()->ExecuteS($query);
+    }
+
+    public function delete() {
+        $to_delete = array((int) $this->id);
+        $list = count($to_delete) > 1 ? implode(',', $to_delete) : (int) $this->id;
+        Db::getInstance()->execute('DELETE FROM `' . _DB_PREFIX_ . 'photo_cat` WHERE `id_photo_cat` IN (' . $list . ')');
+        Db::getInstance()->execute('DELETE FROM `' . _DB_PREFIX_ . 'photo_cat_lang` WHERE `id_photo_cat` IN (' . $list . ')');
+        // Delete photo which are in categories to delete
+        $result = Db::getInstance()->executeS('
+		SELECT `id_photo`
+		FROM `' . _DB_PREFIX_ . 'photo`
+		WHERE `id_photo_cat` IN (' . $list . ')');
+       
+        foreach ($result as $p) {
+            $photo = new Photos($p['id_photo']);            
+            if (Validate::isLoadedObject($photo))
+                $photo->delete();
+        }
+        return true;
     }
 
 }

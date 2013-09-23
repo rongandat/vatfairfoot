@@ -6,7 +6,6 @@
  */
 require_once(_PS_MODULE_DIR_ . 'myphotos/classes/PhotosCategory.php');
 require_once(_PS_MODULE_DIR_ . 'myphotos/classes/Photos.php');
-require_once(_PS_MODULE_DIR_ . 'myphotos/helper/HelperFieldFormNew.php');
 
 class AdminPhotoController extends ModuleAdminController {
 
@@ -15,8 +14,7 @@ class AdminPhotoController extends ModuleAdminController {
         $this->className = 'Photos';
         $this->module = 'myphotos';
 
-        $this->lang = true;
-        $this->addRowAction('view');
+        $this->lang = true;       
         $this->addRowAction('edit');
         $this->addRowAction('delete');
         $this->bulk_actions = array('delete' => array('text' => $this->l('Delete selected'), 'confirm' => $this->l('Delete selected items?')));
@@ -56,9 +54,7 @@ class AdminPhotoController extends ModuleAdminController {
         $this->toolbar_btn['save-and-stay'] = array('href' => '#', 'desc' => $this->l('Save and stay'));
         $defaultLanguage = $this->default_form_language;
 
-        $this->initToolbar();
-        if (!$this->loadObject(true))
-            return;
+        $this->initToolbar();     
 
         $this->fields_form = array(
             'tinymce' => true,
@@ -144,11 +140,11 @@ class AdminPhotoController extends ModuleAdminController {
         );
         if (!($photo = $this->loadObject(true)))
 			return;
-        $image = ImageManager::thumbnail(_PS_MYPHOTO_IMG_DIR_.'/'.$photo->id_photo.'.jpg', $this->table.'_'.(int)$photo->id_photo.'.'.$this->imageType, 350, $this->imageType, true);
-		$this->fields_value = array(
-			'image' => $image ? $image : false,
-			'size' => $image ? filesize(_PS_MYPHOTO_IMG_DIR_.'/'.$photo->id_photo.'.jpg') / 1000 : false
-		);
+//        $image = ImageManager::thumbnail(_PS_MYPHOTO_IMG_DIR_.'/'.$photo->id.'.jpg', $this->table.'_'.(int)$photo->id.'.'.$this->imageType, 350, $this->imageType, true);
+//		$this->fields_value = array(
+//			'image' => $image ? $image : false,
+//			'size' => $image ? filesize(_PS_MYPHOTO_IMG_DIR_.'/'.$photo->id.'.jpg') / 1000 : false
+//		);
         return parent::renderForm();
     }
     
@@ -159,7 +155,7 @@ class AdminPhotoController extends ModuleAdminController {
 		/* Generate image with differents size */
 		if (($id_photo = (int)Tools::getValue('id_photo')) &&
 			isset($_FILES) &&
-			count($_FILES) &&
+			isset($_FILES) && count($_FILES) && $_FILES['image']['name'] != null &&
 			file_exists(_PS_MYPHOTO_IMG_DIR_.$id_photo.'.jpg'))
 		{
 			$images_types = ImageType::getImagesTypes('products');

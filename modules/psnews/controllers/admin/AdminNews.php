@@ -28,13 +28,14 @@ class AdminNewsController extends ModuleAdminController {
             'id_news' => array('title' => $this->l('ID'), 'align' => 'center', 'width' => 30),
             'image' => array(
                 'title' => $this->l('Image'),
-                'image' => 'psnews',
+                'image' => 'psn',
                 'orderby' => false,
                 'search' => false,
                 'width' => 150,
                 'align' => 'center',
             ),
-            'title' => array('name' => $this->l('Title'), 'width' => 'auto'),
+            
+            'name' => array('title' => $this->l('Title'), 'width' => 'auto'),
             'description' => array('title' => $this->l('Description'), 'width' => 500, 'maxlength' => 90, 'orderby' => false),
             'position' => array('title' => $this->l('Position'), 'width' => 40, 'filter_key' => 'position', 'align' => 'center'),
             'active' => array(

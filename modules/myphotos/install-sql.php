@@ -26,11 +26,9 @@ Db::getInstance()->Execute("CREATE TABLE IF NOT EXISTS `" . _DB_PREFIX_ . "photo
                             `id_photo` int(10) NOT NULL AUTO_INCREMENT,
                             `id_photo_cat` int(10) NOT NULL,
                             `active` tinyint(1) NOT NULL,
-                            `img` text NOT NULL,
-                            `thumb` text NOT NULL,
                             `date_add` datetime NOT NULL,
                             `date_upd` datetime NOT NULL,
-                            `order` int(10) NOT NULL,
+                            `position` int(10) NOT NULL,
                             PRIMARY KEY (`id_photo`)
                           ) ENGINE=" . _MYSQL_ENGINE_ . " DEFAULT CHARSET=utf8;");
 

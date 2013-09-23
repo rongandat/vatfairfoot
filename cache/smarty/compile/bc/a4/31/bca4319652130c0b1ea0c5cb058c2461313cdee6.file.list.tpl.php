@@ -1,22 +1,20 @@
-<?php /* Smarty version Smarty-3.1.14, created on 2013-09-20 00:58:43
+<?php /* Smarty version Smarty-3.1.14, created on 2013-09-23 00:53:45
          compiled from "E:\xampp\htdocs\vatfairfoot\modules\myphotos\views\templates\front\list.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:15314523abac01c4a04-08029587%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:7986523fc959634ee4-51519519%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'bca4319652130c0b1ea0c5cb058c2461313cdee6' => 
     array (
       0 => 'E:\\xampp\\htdocs\\vatfairfoot\\modules\\myphotos\\views\\templates\\front\\list.tpl',
-      1 => 1379593092,
+      1 => 1379909383,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '15314523abac01c4a04-08029587',
+  'nocache_hash' => '7986523fc959634ee4-51519519',
   'function' => 
   array (
   ),
-  'version' => 'Smarty-3.1.14',
-  'unifunc' => 'content_523abac03204d2_31938103',
   'variables' => 
   array (
     'list_categories' => 0,
@@ -26,10 +24,23 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'photo' => 0,
   ),
   'has_nocache_code' => false,
+  'version' => 'Smarty-3.1.14',
+  'unifunc' => 'content_523fc9596b5d80_08251365',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_523abac03204d2_31938103')) {function content_523abac03204d2_31938103($_smarty_tpl) {?><?php if (!is_callable('smarty_modifier_escape')) include 'E:\\xampp\\htdocs\\vatfairfoot\\tools\\smarty\\plugins\\modifier.escape.php';
-?><link href="/js/jquery/plugins/fancybox/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
-<script type="text/javascript" src="/js/jquery/plugins/fancybox/jquery.fancybox.js"></script>
+<?php if ($_valid && !is_callable('content_523fc9596b5d80_08251365')) {function content_523fc9596b5d80_08251365($_smarty_tpl) {?><?php if (!is_callable('smarty_modifier_escape')) include 'E:\\xampp\\htdocs\\vatfairfoot\\tools\\smarty\\plugins\\modifier.escape.php';
+?><style>
+    .fancybox-title{
+    font-weight: bold;
+    font-size: 14px;
+    padding-bottom: 10px;
+}
+.fancybox-title .photo_des{
+    font-style: italic;
+    font-size: 12px;
+}
+</style>
+<link href="./js/jquery/plugins/fancybox/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
+<script type="text/javascript" src="./js/jquery/plugins/fancybox/jquery.fancybox.js"></script>
 <?php $_smarty_tpl->tpl_vars["i"] = new Smarty_variable("0", null, 0);?>
 <?php  $_smarty_tpl->tpl_vars['category'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['category']->_loop = false;
  $_from = $_smarty_tpl->tpl_vars['list_categories']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
@@ -48,14 +59,15 @@ foreach ($_from as $_smarty_tpl->tpl_vars['photo']->key => $_smarty_tpl->tpl_var
 $_smarty_tpl->tpl_vars['photo']->_loop = true;
 ?>
         <li class="ajax_block_product">
-            <a href="<?php echo $_smarty_tpl->tpl_vars['img_photo_dir']->value;?>
+            <a href="http://<?php echo $_SERVER['HTTP_HOST'];?>
+<?php echo $_smarty_tpl->tpl_vars['img_photo_dir']->value;?>
 <?php echo smarty_modifier_escape($_smarty_tpl->tpl_vars['photo']->value['id_photo'], 'htmlall', 'UTF-8');?>
--thickbox_01prem.jpg" rel="other-views" class="thickbox<?php echo $_smarty_tpl->tpl_vars['category']->value['id_photo_cat'];?>
+.jpg" rel="other-views" class="thickbox<?php echo $_smarty_tpl->tpl_vars['category']->value['id_photo_cat'];?>
+" title="<?php echo $_smarty_tpl->tpl_vars['photo']->value['title'];?>
 ">
                 <div class="content">
                     <h2 class="title"><?php echo $_smarty_tpl->tpl_vars['photo']->value['title'];?>
-<span><?php echo smarty_modifier_escape($_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_MODIFIER]['truncate'][0][0]->smarty_modifier_truncate($_smarty_tpl->tpl_vars['photo']->value['description'],35,'...'), 'htmlall', 'UTF-8');?>
-</span></h2><br />
+</h2><br />
 
                 </div>
                 <div class="image">
@@ -79,7 +91,23 @@ $_smarty_tpl->tpl_vars['photo']->_loop = true;
         'speedOut': 200,
         'overlayShow': false,
         'cyclic': true,
-        'showNavArrows': true
+        'showNavArrows': true,
+        helpers : {
+        title: {
+            type: 'inside',
+            position: 'top'
+            }
+        },
+        beforeShow: function () {
+            if (this.title) {
+                // New line
+                this.title += '<br />';
+                this.title += '<div class="photo_des"> <?php echo smarty_modifier_escape($_smarty_tpl->tpl_vars['photo']->value['description'], 'htmlall', 'UTF-8');?>
+</div><br />';
+                // Add FaceBook like button
+                this.title += '<iframe src="//www.facebook.com/plugins/like.php?href=' + this.href + '&amp;layout=button_count&amp;show_faces=true&amp;width=500&amp;action=like&amp;font&amp;colorscheme=light&amp;height=23" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:110px; height:23px;" allowTransparency="true"></iframe>';
+            }
+        }
     });
 </script>
 <?php } ?>

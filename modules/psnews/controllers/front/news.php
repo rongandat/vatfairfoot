@@ -11,7 +11,6 @@
  */
 require_once(_PS_MODULE_DIR_ . "psnews/psnews.php");
 require_once(_PS_MODULE_DIR_ . "psnews/classes/News.php");
-define('_THEME_NEWS_DIR_', _PS_IMG_ . 'psn/');
 
 class PsNewsNewsModuleFrontController extends ModuleFrontController {
 

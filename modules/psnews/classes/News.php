@@ -4,7 +4,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
+define('_THEME_NEWS_DIR_', _PS_IMG_ . 'psn/');
 class News extends ObjectModel {
 
     public $id_news;
@@ -38,6 +38,7 @@ class News extends ObjectModel {
             //'img' => array('type' => self::TYPE_STRING),
             // Lang fields
             'name' => array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isCatalogName', 'required' => true, 'size' => 64),
+            'link_rewrite' => array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isCatalogName', 'required' => true, 'size' => 64),
             'meta_title' => array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isCatalogName', 'required' => false, 'size' => 64),
             'meta_keywords' => array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isCatalogName', 'required' => false, 'size' => 64),
             'description' => array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isCleanHtml'),
@@ -95,11 +96,9 @@ class News extends ObjectModel {
 
         $languages = Language::getLanguages(true, $context->shop->id);
         $shop_url = $context->shop->getBaseURL();
-
         if (Configuration::get('PS_REWRITING_SETTINGS')) {
           
             $iso = ($id_lang > 0 && count($languages) > 1) ? Language::getIsoById(intval($id_lang)) . '/' : '';
-
             return $shop_url . $iso . 'news/' . $id_news . '-' . $rewrite;
         } else {
             

@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1.14, created on 2013-09-20 00:56:47
+<?php /* Smarty version Smarty-3.1.14, created on 2013-09-22 23:35:34
          compiled from "E:\xampp\htdocs\vatfairfoot\themes\01premium\product.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:29766523a73179a7339-38890883%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:20968523fb706f19328-91180015%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,12 +11,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '29766523a73179a7339-38890883',
+  'nocache_hash' => '20968523fb706f19328-91180015',
   'function' => 
   array (
   ),
-  'version' => 'Smarty-3.1.14',
-  'unifunc' => 'content_523a73182cd6b7_29424289',
   'variables' => 
   array (
     'errors' => 0,
@@ -110,8 +108,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'textFields' => 0,
   ),
   'has_nocache_code' => false,
+  'version' => 'Smarty-3.1.14',
+  'unifunc' => 'content_523fb707804d03_32095304',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_523a73182cd6b7_29424289')) {function content_523a73182cd6b7_29424289($_smarty_tpl) {?><?php if (!is_callable('smarty_modifier_escape')) include 'E:\\xampp\\htdocs\\vatfairfoot\\tools\\smarty\\plugins\\modifier.escape.php';
+<?php if ($_valid && !is_callable('content_523fb707804d03_32095304')) {function content_523fb707804d03_32095304($_smarty_tpl) {?><?php if (!is_callable('smarty_modifier_escape')) include 'E:\\xampp\\htdocs\\vatfairfoot\\tools\\smarty\\plugins\\modifier.escape.php';
 if (!is_callable('smarty_modifier_date_format')) include 'E:\\xampp\\htdocs\\vatfairfoot\\tools\\smarty\\plugins\\modifier.date_format.php';
 if (!is_callable('smarty_function_math')) include 'E:\\xampp\\htdocs\\vatfairfoot\\tools\\smarty\\plugins\\function.math.php';
 if (!is_callable('smarty_function_counter')) include 'E:\\xampp\\htdocs\\vatfairfoot\\tools\\smarty\\plugins\\function.counter.php';

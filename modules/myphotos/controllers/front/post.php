@@ -14,6 +14,7 @@ require_once(_PS_MODULE_DIR_ . "myphotos/classes/Photos.php");
 require_once(_PS_MODULE_DIR_ . "myphotos/classes/PhotosCategory.php");
 define('_THEME_PHOTO_DIR_', _PS_IMG_ . 'myphoto/');
 
+
 class MyphotosPostModuleFrontController extends ModuleFrontController {
 
     public $conf;

@@ -8,7 +8,7 @@
  * @version 1.5
  *
  */
-define('_THEME_NEWS_DIR_', _PS_IMG_ . 'psn/');
+//
 class Psnewsnest extends Module {
 
     private $_html = '';

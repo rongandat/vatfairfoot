@@ -11,8 +11,6 @@
  */
 require_once(_PS_MODULE_DIR_ . 'myphotos/classes/PhotosCategory.php');
 
-//require_once(_PS_MODULE_DIR_ . 'myphotos/classes/PhotoImage.php');
-
 class AdminPhotosCategoryController extends ModuleAdminController {
 
     public function __construct() {
@@ -21,7 +19,6 @@ class AdminPhotosCategoryController extends ModuleAdminController {
         $this->module = 'myphotos';
 
         $this->lang = true;
-        $this->addRowAction('view');
         $this->addRowAction('edit');
         $this->addRowAction('delete');
         $this->bulk_actions = array('delete' => array('text' => $this->l('Delete selected'), 'confirm' => $this->l('Delete selected items?')));

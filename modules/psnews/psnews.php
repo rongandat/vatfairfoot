@@ -23,7 +23,8 @@ class Psnews extends Module {
         $this->name = 'psnews';
         $this->tab = 'front_office_features';
         $this->version = '1.0';
-        $this->author = 'Huyen Nguyen';
+        $this->author = 'Khiem Pham';
+        $this->multishop_context = Shop::CONTEXT_ALL;
         $this->need_instance = 0;
         parent::__construct();
         $this->checkServerConf();
@@ -89,42 +90,13 @@ class Psnews extends Module {
         }
     }
     
-    public function hookProductTabContent($params) {
-
-        $id_product = (int) $_GET['id_product'];
-        if (!$id_product)
-            return false;
-
-        require_once(dirname(__FILE__) . "/classes/BlogPost.php");
-
-        $list = BlogPost::listPosts(true, true, null, null, false, null, $id_product, null);
-
-        if ($list) {
-            $i = 0;
-            foreach ($list as $val) {
-                $list[$i]['link'] = BlogPost::linkPost($val['id_news_post'], $val['link_rewrite'], $val['id_lang']);
-                $i++;
-            }
-        }
-        $this->smarty->assign(array('post_product_list' => $list));
-        return $this->display(__FILE__, 'views/templates/front/product-tabcontent.tpl');
-    }
 
     
     public function hookHeader($params) {
         $this->context->controller->addCSS($this->_path . 'psnews.css', 'all');
     }
 
-    public function hookProductTab($params) {
-
-        require_once(dirname(__FILE__) . "/classes/BlogPost.php");
-
-        $id_product = (int) $_GET['id_product'];
-        $nb = BlogPost::listPosts(true, true, null, null, true, null, $id_product, null);
-        if ($nb > 0)
-            return $this->display(__FILE__, 'views/templates/front/product-tabtitle.tpl');
-    }
-
+ 
 
 
     private function createAdminTabs() {

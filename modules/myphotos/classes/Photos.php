@@ -7,7 +7,7 @@
 define('_PS_MYPHOTO_IMG_DIR_', _PS_IMG_DIR_ . 'myphoto/');
 
 class Photos extends ObjectModel {
-
+    public $id;
     public $id_photo;
     public $id_photo_cat;
     public $title;
@@ -38,9 +38,19 @@ class Photos extends ObjectModel {
             'description' => array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isCleanHtml'),
         ),
     );
-
+    public $id_image = 'default';
+    public function __construct($id_photo = null, $id_lang = null, $id_shop = null)
+	{
+		parent::__construct($id_photo, $id_lang, $id_shop);
+		$this->id_image = ($this->id && file_exists(_PS_MYPHOTO_IMG_DIR_.(int)$this->id.'.jpg')) ? (int)$this->id : false;
+		$this->image_dir = _PS_MYPHOTO_IMG_DIR_;
+	}
     public function add($autodate = true, $null_values = false) {
         return parent::add($autodate, true);
+    }
+
+    public function delete() {
+        return parent::delete();
     }
 
     /*     * **** categories ***** */
@@ -66,6 +76,7 @@ class Photos extends ObjectModel {
         $query .= ' AND pl.id_lang = ' . $context->language->id;
 
         $query .= ' AND p.active = 1';
+        $query .= ' ORDER BY p.position, pl.title';
 
         return Db::getInstance()->ExecuteS($query);
     }
