@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1.14, created on 2013-09-23 03:09:00
+<?php /* Smarty version Smarty-3.1.14, created on 2013-09-24 00:21:10
          compiled from "E:\xampp\htdocs\vatfairfoot\themes\01premium\modules\blockcustomerprivacy\blockcustomerprivacy.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:2967523fe90c5dbac9-47747427%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:3246524113369727d6-60281129%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '2967523fe90c5dbac9-47747427',
+  'nocache_hash' => '3246524113369727d6-60281129',
   'function' => 
   array (
   ),
@@ -21,9 +21,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.14',
-  'unifunc' => 'content_523fe90c6125d2_25025122',
+  'unifunc' => 'content_524113369ad167_96452683',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_523fe90c6125d2_25025122')) {function content_523fe90c6125d2_25025122($_smarty_tpl) {?>
+<?php if ($_valid && !is_callable('content_524113369ad167_96452683')) {function content_524113369ad167_96452683($_smarty_tpl) {?>
 
 <div class="error_customerprivacy" style="color:red;"></div>
 <fieldset class="account_creation customerprivacy">

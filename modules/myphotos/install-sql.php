@@ -40,4 +40,13 @@ Db::getInstance()->Execute("CREATE TABLE IF NOT EXISTS `" . _DB_PREFIX_ . "photo
                             `description` text NOT NULL,
                             PRIMARY KEY (`id_photo_lang`)
                           ) ENGINE=" . _MYSQL_ENGINE_ . "  DEFAULT CHARSET=utf8;");
+Db::getInstance()->Execute("CREATE TABLE IF NOT EXISTS `" . _DB_PREFIX_ . "photo_ratting` (
+  `id_photo_ratting` int(10) NOT NULL AUTO_INCREMENT,
+  `id_photo` int(10) NOT NULL,
+  `id_customer` int(10) NOT NULL,
+  `ratting` int(10) NOT NULL,
+  `date_add` datetime NOT NULL,
+  PRIMARY KEY (`id_photo_ratting`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+");
 ?>

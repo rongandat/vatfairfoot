@@ -11,12 +11,13 @@
  */
 require_once(_PS_MODULE_DIR_ . "myphotos/myphotos.php");
 require_once(_PS_MODULE_DIR_ . "myphotos/classes/Photos.php");
+require_once(_PS_MODULE_DIR_ . "myphotos/classes/PhotosRatting.php"); 
 require_once(_PS_MODULE_DIR_ . "myphotos/classes/PhotosCategory.php");
 define('_THEME_PHOTO_DIR_', _PS_IMG_ . 'myphoto/');
 
-
 class MyphotosPostModuleFrontController extends ModuleFrontController {
 
+    public $auth = false;
     public $conf;
     public $id_category = null;
     public $id_post = null;
@@ -29,6 +30,7 @@ class MyphotosPostModuleFrontController extends ModuleFrontController {
     }
 
     public function init() {
+       
         Tools::switchLanguage(); //switch language if lang param, ps bug.
 
         /*         * * URL MANAGEMENT ** */
@@ -46,7 +48,8 @@ class MyphotosPostModuleFrontController extends ModuleFrontController {
 
     public function setMedia() {
         parent::setMedia();
-//        $this->addCSS($this->module->getPathUri() . 'psblog.css');
+        $this->addCSS($this->module->getPathUri() . 'jquery/jRating.jquery.css');
+        $this->addJs($this->module->getPathUri().'jquery/jRating.jquery.min.js');
     }
 
     public function displayList() {
@@ -70,18 +73,24 @@ class MyphotosPostModuleFrontController extends ModuleFrontController {
             foreach ($list as $cat) {
 
                 $photos = Photos::getPhotosByCategory($cat['id_photo_cat']);
-
-                $cat['photos'] = $photos;
+                $list_photo = array();
+                foreach ($photos as $key => $val){
+                    $photo = $val;
+                    $photo['average'] = PhotosRatting::getAverage($val['id_photo']);
+                    $list_photo[] = $photo;
+                }
+                $cat['photos'] = $list_photo;
                 $listCategories[] = $cat;
             }
+            
 //            echo '<pre>';
 //            print_r($listCategories);
 //            echo '</pre>';
 
             $this->context->smarty->assign(array(
                 'list_categories' => $listCategories,
-                'img_photo_dir' => _THEME_PHOTO_DIR_
-//                'next' => $next,
+                'img_photo_dir' => _THEME_PHOTO_DIR_,
+                'customer' => $this->context->customer->id,
 //                'back' => $back,
 //                'curr_page' => $current_page
             ));

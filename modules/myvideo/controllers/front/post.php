@@ -11,6 +11,7 @@
  */
 require_once(_PS_MODULE_DIR_ . "myvideo/myvideo.php");
 require_once(_PS_MODULE_DIR_ . "myvideo/classes/Videos.php");
+require_once(_PS_MODULE_DIR_ . "myvideo/classes/VideosRatting.php");
 require_once(_PS_MODULE_DIR_ . "myvideo/classes/VideoCategory.php");
 define('_THEME_VIDEO_DIR_', _PS_IMG_ . 'myvideo/');
 
@@ -46,6 +47,8 @@ class MyvideoPostModuleFrontController extends ModuleFrontController {
     public function setMedia() {
         parent::setMedia();
         $this->addCSS($this->module->getPathUri() . 'myvideo.css');
+        $this->addCSS($this->module->getPathUri() . 'jquery/jRating.jquery.css');
+        $this->addJs($this->module->getPathUri().'jquery/jRating.jquery.min.js');
     }
 
     public function displayList() {
@@ -58,6 +61,7 @@ class MyvideoPostModuleFrontController extends ModuleFrontController {
         $start = ($current_page - 1) * $limit_per_page;
         $list = VideoCategory::getCategories();
         $listCategories = array();
+        
         if (isset($list) && is_array($list) && count($list)) {
 
             /** pagination * */
@@ -67,10 +71,14 @@ class MyvideoPostModuleFrontController extends ModuleFrontController {
 
             $i = 0;
             foreach ($list as $cat) {
-
-                $video = Videos::getVideoByCategory($cat['id_video_cat']);
-
-                $cat['video'] = $video;
+                $videos = Videos::getVideoByCategory($cat['id_video_cat']);
+                $list_video = array();
+                foreach ($videos as $key => $val){
+                    $video = $val;
+                    $video['average'] = VideosRatting::getAverage($val['id_video']);
+                    $list_video[] = $video;
+                }
+                $cat['videos'] = $list_video;
                 $listCategories[] = $cat;
             }
 //            echo '<pre>';
@@ -79,7 +87,8 @@ class MyvideoPostModuleFrontController extends ModuleFrontController {
 
             $this->context->smarty->assign(array(
                 'list_categories' => $listCategories,
-                'img_video_dir' => _THEME_VIDEO_DIR_
+                'img_video_dir' => _THEME_VIDEO_DIR_,
+                'customer' => $this->context->customer->id,
 //                'next' => $next,
 //                'back' => $back,
 //                'curr_page' => $current_page

@@ -42,6 +42,7 @@ class BlogCategory extends ObjectModel {
     }
 
     public function add($autodate = true, $nullValues = false) {
+      
         return parent::add($autodate, true);
     }
 
